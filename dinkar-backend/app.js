@@ -10,6 +10,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res
+      .status(503)
+      .json({ message: "Database connection failed. Please try again." });
+  }
+});
+
 // Routes
 app.use("/api/auth", require("./routes/auth.routes"));
 app.use("/api/admin", require("./routes/admin.routes"));
@@ -89,8 +100,5 @@ if (isDev) {
     res.sendFile(path.join(frontendDistPath, "index.html"));
   });
 }
-
-// Connect to MongoDB (fire-and-forget; mongoose buffers queries until connected)
-connectDB();
 
 module.exports = app;
