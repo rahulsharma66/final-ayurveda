@@ -10,14 +10,14 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    value: "+91 98765 43210",
-    action: "tel:+919876543210",
+    value: "+91 83024 64069",
+    action: "tel:+918302464069",
   },
   {
     icon: Mail,
     title: "Email",
-    value: "info@dinkarayurveda.com",
-    action: "mailto:info@dinkarayurveda.com",
+    value: "dinkarayurveda@gmail.com",
+    action: "mailto:dinkarayurveda@gmail.com",
   },
   {
     icon: MapPin,
@@ -116,7 +116,7 @@ const Contact = () => {
                       Get instant responses and personalized product recommendations 
                       from our Ayurvedic experts.
                     </p>
-                    <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">
+                    <a href="https://wa.me/918302464069" target="_blank" rel="noopener noreferrer">
                       <Button className="bg-neem hover:bg-neem/90 gap-2">
                         <MessageCircle className="w-4 h-4" />
                         Start Chat

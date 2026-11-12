@@ -29,7 +29,7 @@ export const CTASection = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/918302464069" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="outline" className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 text-base px-8">
                   <MessageCircle className="w-4 h-4" />
                   Chat on WhatsApp

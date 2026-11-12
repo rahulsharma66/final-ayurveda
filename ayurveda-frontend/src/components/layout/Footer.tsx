@@ -84,13 +84,23 @@ export const Footer = () => {
           <div>
             <h4 className="font-serif text-lg font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <Phone className="w-4 h-4 mt-0.5 opacity-80" />
-                <span className="text-sm opacity-80">+91 98765 43210</span>
+              <li>
+                <a
+                  href="tel:+918302464069"
+                  className="flex items-start gap-3 text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  <Phone className="w-4 h-4 mt-0.5" />
+                  <span>+91 83024 64069</span>
+                </a>
               </li>
-              <li className="flex items-start gap-3">
-                <Mail className="w-4 h-4 mt-0.5 opacity-80" />
-                <span className="text-sm opacity-80">info@dinkarayurveda.com</span>
+              <li>
+                <a
+                  href="mailto:dinkarayurveda@gmail.com"
+                  className="flex items-start gap-3 text-sm opacity-80 hover:opacity-100 transition-opacity"
+                >
+                  <Mail className="w-4 h-4 mt-0.5" />
+                  <span>dinkarayurveda@gmail.com</span>
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5 opacity-80" />
