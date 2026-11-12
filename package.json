@@ -9,7 +9,8 @@
     "dev:admin": "npm --prefix dinkar-admin run dev",
     "build": "npm --prefix ayurveda-frontend run build && npm --prefix dinkar-admin run build && node scripts/copy-admin.js",
     "build:frontend": "npm --prefix ayurveda-frontend run build",
-    "build:admin": "npm --prefix dinkar-admin run build"
+    "build:admin": "npm --prefix dinkar-admin run build",
+    "postinstall": "npm --prefix ayurveda-frontend install --include=dev && npm --prefix dinkar-admin install --include=dev && npm --prefix dinkar-backend install --include=dev"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
