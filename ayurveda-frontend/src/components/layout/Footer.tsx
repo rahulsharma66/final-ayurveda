@@ -1,7 +1,53 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Leaf, Phone, Mail, MapPin, Facebook, Instagram, Youtube } from "lucide-react";
+import { getProducts } from "@/lib/api";
+
+interface FooterProduct {
+  _id?: string;
+  id?: string;
+  name: string;
+  shortName?: string;
+  featured?: boolean;
+}
+
+const fallbackProducts: FooterProduct[] = [
+  { name: "Chyawanprash" },
+  { name: "Shat Dhaut Ghrita" },
+  { name: "Herbal Shampoo" },
+  { name: "Kesuda Soap" },
+  { name: "Neem-Tulsi Soap" },
+];
 
 export const Footer = () => {
+  const [products, setProducts] = useState<FooterProduct[]>(fallbackProducts);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadProducts = async () => {
+      try {
+        const data = await getProducts();
+        if (!mounted) return;
+
+        const list = Array.isArray(data) ? (data as FooterProduct[]) : [];
+        const featured = list.filter((product) => product.featured);
+        const others = list.filter((product) => !product.featured);
+        const displayProducts = [...featured, ...others].slice(0, 5);
+
+        setProducts(displayProducts.length > 0 ? displayProducts : fallbackProducts);
+      } catch {
+        if (mounted) setProducts(fallbackProducts);
+      }
+    };
+
+    loadProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -61,22 +107,19 @@ export const Footer = () => {
           <div>
             <h4 className="font-serif text-lg font-semibold mb-4">Our Products</h4>
             <ul className="space-y-2">
-              {[
-                "Chyawanprash",
-                "Shat Dhaut Ghrita",
-                "Herbal Shampoo",
-                "Kesuda Soap",
-                "Neem-Tulsi Soap",
-              ].map((product) => (
-                <li key={product}>
-                  <Link 
-                    to="/products" 
-                    className="text-sm opacity-80 hover:opacity-100 transition-opacity"
-                  >
-                    {product}
-                  </Link>
-                </li>
-              ))}
+              {products.map((product) => {
+                const productId = product._id || product.id;
+                return (
+                  <li key={productId || product.name}>
+                    <Link
+                      to={productId ? `/products/${productId}` : "/products"}
+                      className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                    >
+                      {product.shortName || product.name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

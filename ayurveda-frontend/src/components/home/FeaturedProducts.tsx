@@ -23,10 +23,7 @@ export const FeaturedProducts = () => {
     const load = async () => {
       try {
         const data = await getProducts();
-        const products = Array.isArray(data) ? data : [];
-        const featured = products.filter((p: any) => p.featured);
-        const others = products.filter((p: any) => !p.featured);
-        setFeaturedProductList([...featured, ...others].slice(0, 5));
+        setFeaturedProductList((data || []).filter((p: any) => p.featured));
       } catch (error) {
         console.error("Failed to load featured products", error);
       } finally {
