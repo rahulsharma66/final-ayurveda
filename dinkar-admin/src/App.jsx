@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Categories from "./pages/Categories";
 import Products from "./pages/Product";
 import Ingredients from "./pages/Ingredients";
+import AdminUsers from "./pages/AdminUsers";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "./components/AdminLayout";
 
@@ -44,6 +45,18 @@ function App() {
             <ProtectedRoute>
               <AdminLayout>
                 <Ingredients />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Protected Admin Users Route */}
+        <Route
+          path="/admins"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminUsers />
               </AdminLayout>
             </ProtectedRoute>
           }

@@ -2,7 +2,12 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-const routes = ["products", "categories", "ingredients"];
+const routes = [
+  { to: "/products", label: "Products" },
+  { to: "/categories", label: "Categories" },
+  { to: "/ingredients", label: "Ingredients" },
+  { to: "/admins", label: "Admin Users" },
+];
 
 const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -63,8 +68,8 @@ const AdminLayout = ({ children }) => {
         <nav className="flex-1 space-y-2 overflow-y-auto p-4">
           {routes.map((route) => (
             <NavLink
-              key={route}
-              to={`/${route}`}
+              key={route.to}
+              to={route.to}
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 `block rounded px-4 py-2 transition-colors ${
@@ -74,7 +79,7 @@ const AdminLayout = ({ children }) => {
                 }`
               }
             >
-              {route.charAt(0).toUpperCase() + route.slice(1)}
+              {route.label}
             </NavLink>
           ))}
         </nav>

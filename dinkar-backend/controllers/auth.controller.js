@@ -72,19 +72,27 @@ exports.login = async (req, res) => {
     if (
       user &&
       user.role === "admin" &&
-      !user.recoveryEmail &&
-      user.email === ADMIN_RECOVERY_EMAIL
+      (user.email === ADMIN_RECOVERY_EMAIL ||
+        user.recoveryEmail === ADMIN_RECOVERY_EMAIL)
     ) {
-      user.recoveryEmail = ADMIN_RECOVERY_EMAIL;
-      await user.save();
+      let changed = false;
+      if (user.recoveryEmail !== ADMIN_RECOVERY_EMAIL) {
+        user.recoveryEmail = ADMIN_RECOVERY_EMAIL;
+        changed = true;
+      }
+      if (user.isActive !== true) {
+        user.isActive = true;
+        changed = true;
+      }
+      if (changed) await user.save();
     }
 
-    if (
-      !user ||
-      user.role !== "admin" ||
-      user.recoveryEmail !== ADMIN_RECOVERY_EMAIL
-    ) {
+    if (!user || user.role !== "admin") {
       return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (user.isActive !== true) {
+      return res.status(403).json({ message: "Admin account is inactive" });
     }
 
     if (!user.isEmailVerified) {
