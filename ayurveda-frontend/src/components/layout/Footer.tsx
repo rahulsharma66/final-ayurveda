@@ -11,16 +11,8 @@ interface FooterProduct {
   featured?: boolean;
 }
 
-const fallbackProducts: FooterProduct[] = [
-  { name: "Chyawanprash" },
-  { name: "Shat Dhaut Ghrita" },
-  { name: "Herbal Shampoo" },
-  { name: "Kesuda Soap" },
-  { name: "Neem-Tulsi Soap" },
-];
-
 export const Footer = () => {
-  const [products, setProducts] = useState<FooterProduct[]>(fallbackProducts);
+  const [products, setProducts] = useState<FooterProduct[]>([]);
 
   useEffect(() => {
     let mounted = true;
@@ -31,13 +23,9 @@ export const Footer = () => {
         if (!mounted) return;
 
         const list = Array.isArray(data) ? (data as FooterProduct[]) : [];
-        const featured = list.filter((product) => product.featured);
-        const others = list.filter((product) => !product.featured);
-        const displayProducts = [...featured, ...others].slice(0, 5);
-
-        setProducts(displayProducts.length > 0 ? displayProducts : fallbackProducts);
+        setProducts(list.filter((product) => product.featured).slice(0, 5));
       } catch {
-        if (mounted) setProducts(fallbackProducts);
+        if (mounted) setProducts([]);
       }
     };
 
@@ -106,21 +94,30 @@ export const Footer = () => {
           {/* Products */}
           <div>
             <h4 className="font-serif text-lg font-semibold mb-4">Our Products</h4>
-            <ul className="space-y-2">
-              {products.map((product) => {
-                const productId = product._id || product.id;
-                return (
-                  <li key={productId || product.name}>
-                    <Link
-                      to={productId ? `/products/${productId}` : "/products"}
-                      className="text-sm opacity-80 hover:opacity-100 transition-opacity"
-                    >
-                      {product.shortName || product.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+            {products.length > 0 ? (
+              <ul className="space-y-2">
+                {products.map((product) => {
+                  const productId = product._id || product.id;
+                  return (
+                    <li key={productId || product.name}>
+                      <Link
+                        to={productId ? `/products/${productId}` : "/products"}
+                        className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+                      >
+                        {product.shortName || product.name}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <Link
+                to="/products"
+                className="text-sm opacity-80 hover:opacity-100 transition-opacity"
+              >
+                View All Products
+              </Link>
+            )}
           </div>
 
           {/* Contact */}
